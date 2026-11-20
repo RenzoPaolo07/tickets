@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pase VIP Exclusivo: Talonario de Amor | Gigi & Renzo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#fde68a',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        },
+                        wine: {
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#be123c',
+                            600: '#9f1239',
+                            700: '#881337',
+                            800: '#4c0519',
+                            900: '#2e0210',
+                            950: '#1a0008',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+                        'shimmer': 'shimmer 3s linear infinite',
+                        'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-ring': 'pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        glowPulse: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(234, 179, 8, 0.15), 0 0 40px rgba(190, 18, 60, 0.08)' },
+                            '50%': { boxShadow: '0 0 35px rgba(234, 179, 8, 0.35), 0 0 70px rgba(190, 18, 60, 0.18)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px) scale(0.96)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pulseRing: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.8' },
+                            '80%, 100%': { transform: 'scale(2)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        .perspective-1000 { perspective: 1200px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Fondo ultra premium */
+        body {
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(190, 18, 60, 0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(234, 179, 8, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(159, 18, 57, 0.12) 0%, transparent 60%),
+                #080002;
+            background-attachment: fixed;
+        }
+
+        /* Scrollbar personalizada */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, #eab308, #be123c); 
+            border-radius: 10px;
+            box-shadow: 0 0 6px rgba(234, 179, 8, 0.4);
+        }
+
+        /* Brillo dorado en bordes */
+        .gold-border-glow {
+            box-shadow: 
+                0 0 0 1px rgba(234, 179, 8, 0.35),
+                0 0 25px rgba(234, 179, 8, 0.12),
+                0 0 60px rgba(190, 18, 60, 0.08),
+                inset 0 0 30px rgba(234, 179, 8, 0.03);
+        }
+
+        /* Efecto shimmer en títulos */
+        .shimmer-text {
+            background: linear-gradient(110deg, #fde68a 0%, #facc15 15%, #fff 30%, #facc15 45%, #fde68a 60%, #eab308 75%, #f472b6 90%, #fde68a 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* Card hover lift con profundidad */
+        .ticket-card-wrapper {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+        }
+        .ticket-card-wrapper:hover {
+            transform: translateY(-8px) scale(1.02);
+            filter: drop-shadow(0 25px 30px rgba(234, 179, 8, 0.12)) drop-shadow(0 15px 20px rgba(190, 18, 60, 0.15));
+        }
+
+        /* Modal backdrop */
+        #success-modal {
+            transition: opacity 0.35s ease;
+        }
+        #success-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Botón canjear shine */
+        .btn-redeem {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .btn-redeem::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
+        }
+        .btn-redeem:hover::before {
+            transform: translateX(100%);
+        }
+        .btn-redeem > * { position: relative; z-index: 2; }
+
+        /* Patrón de puntos dorados */
+        .pattern-dots {
+            background-image: radial-gradient(rgba(234, 179, 8, 0.12) 1px, transparent 1px);
+            background-size: 22px 22px;
+        }
+
+        /* Ticket perforado decorativo */
+        .ticket-perforation {
+            background-image: radial-gradient(circle, #080002 2.5px, transparent 2.5px);
+            background-size: 9px 9px;
+            background-position: center;
+        }
+
+        /* Texto con gradiente dorado-vino */
+        .text-gradient-gold-wine {
+            background: linear-gradient(135deg, #fde68a 0%, #facc15 40%, #f472b6 70%, #be123c 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Partículas flotantes de fondo */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.4;
+            animation: particleFloat linear infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) translateX(30px) scale(1); opacity: 0; }
+        }
+
+        /* Borde decorativo de las tarjetas traseras */
+        .back-decorative-line {
+            background: linear-gradient(90deg, transparent, #eab308, #be123c, #eab308, transparent);
+            height: 2px;
+        }
+
+        /* Efecto de esquina cortada (ticket real) */
+        .ticket-front::before,
+        .ticket-front::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #080002;
+            border-radius: 50%;
+            z-index: 5;
+        }
+        .ticket-front::before {
+            top: 50%;
+            left: -9px;
+            transform: translateY(-50%);
+        }
+        .ticket-front::after {
+            top: 50%;
+            right: -9px;
+            transform: translateY(-50%);
+        }
+        .ticket-back::before,
+        .ticket-back::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #080002;
+            border-radius: 50%;
+            z-index: 5;
+        }
+        .ticket-back::before {
+            top: 50%;
+            left: -9px;
+            transform: translateY(-50%);
+        }
+        .ticket-back::after {
+            top: 50%;
+            right: -9px;
+            transform: translateY(-50%);
+        }
+
+        /* Línea punteada vertical estilo ticket */
+        .ticket-dashed-line {
+            background-image: linear-gradient(to bottom, rgba(234, 179, 8, 0.4) 50%, transparent 50%);
+            background-size: 1px 8px;
+            background-repeat: repeat-y;
+        }
+    </style>
+</head>
+<body class="text-zinc-100 font-sans min-h-screen selection:bg-amber-500 selection:text-zinc-950 overflow-x-hidden relative">
+
+    <!-- Partículas flotantes de fondo (generadas por JS) -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Header Elegante Premium -->
+    <header class="relative overflow-hidden border-b border-amber-500/20 py-14 px-4 sm:px-6 lg:px-8 shadow-2xl z-10">
+        <!-- Capas decorativas -->
+        <div class="absolute inset-0 pattern-dots opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-wine-950/70 via-wine-950/20 to-transparent"></div>
+        <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-wine-600/8 rounded-full blur-3xl animate-float-slow"></div>
+        <div class="absolute -top-20 -right-40 w-[500px] h-[500px] bg-amber-500/6 rounded-full blur-3xl animate-float"></div>
+        
+        <!-- Líneas doradas superiores -->
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent"></div>
+        <div class="absolute top-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-wine-500/30 to-transparent"></div>
+
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <!-- Badge flotante -->
+            <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full border border-amber-500/40 bg-gradient-to-r from-wine-900/90 via-wine-800/70 to-wine-900/90 text-amber-300 text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase mb-6 shadow-2xl backdrop-blur-xl animate-float">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                </span>
+                Edición Limitada Cusco 2026
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                </span>
+            </div>
+
+            <!-- Título principal -->
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-4 shimmer-text drop-shadow-2xl leading-tight">
+                Talonario VIP de Amor
+            </h1>
+
+            <!-- Línea decorativa bajo el título -->
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <div class="h-px w-16 bg-gradient-to-r from-transparent to-amber-500/60"></div>
+                <span class="text-amber-400 text-lg">✦</span>
+                <div class="h-px w-16 bg-gradient-to-l from-transparent to-amber-500/60"></div>
+            </div>
+
+            <!-- Subtítulo -->
+            <p class="text-zinc-300 text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed">
+                Diseñado exclusivamente por <span class="text-amber-400 font-semibold">Renzo</span> para la dueña de mi corazón y reina absoluta de este viaje:
+                <span class="text-gradient-gold-wine font-bold text-lg">Gigi ❤️</span>
+            </p>
+
+            <!-- Dashboard premium -->
+            <div class="flex flex-wrap justify-center items-stretch gap-4 sm:gap-6 mb-10">
+                <!-- Contador -->
+                <div class="group relative bg-gradient-to-br from-wine-900/70 to-zinc-900/90 border border-amber-500/25 rounded-2xl px-7 py-4 shadow-2xl backdrop-blur-xl hover:border-amber-500/50 transition-all duration-300 animate-glow-pulse min-w-[180px]">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/8 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <span class="block text-[10px] text-amber-400/80 uppercase tracking-[0.18em] font-bold mb-1.5">Tickets Canjeados</span>
+                        <span id="redeemed-count" class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 transition-transform duration-300 inline-block">0 / 24</span>
+                    </div>
+                </div>
+
+                <!-- Estado -->
+                <div class="group relative bg-gradient-to-br from-wine-900/70 to-zinc-900/90 border border-emerald-500/25 rounded-2xl px-7 py-4 shadow-2xl backdrop-blur-xl hover:border-emerald-500/50 transition-all duration-300 min-w-[180px]">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/8 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <span class="block text-[10px] text-emerald-400/80 uppercase tracking-[0.18em] font-bold mb-1.5">Estado del Pase</span>
+                        <span class="text-lg font-bold text-emerald-400 flex items-center justify-center gap-2">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                            </span>
+                            Activo & Ilimitado
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros premium -->
+            <div class="inline-flex flex-wrap justify-center gap-1.5 p-2 bg-zinc-950/60 border border-zinc-800/80 rounded-2xl backdrop-blur-xl shadow-2xl">
+                <button onclick="filterTickets('all')" id="btn-all" class="px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 text-zinc-950 transition-all shadow-lg shadow-amber-500/25">
+                    ✦ Todos
+                </button>
+                <button onclick="filterTickets('available')" id="btn-available" class="px-6 py-2.5 rounded-xl text-xs font-bold text-zinc-300 hover:bg-wine-800/40 hover:text-amber-300 transition-all">
+                    Disponibles
+                </button>
+                <button onclick="filterTickets('redeemed')" id="btn-redeemed" class="px-6 py-2.5 rounded-xl text-xs font-bold text-zinc-300 hover:bg-wine-800/40 hover:text-amber-300 transition-all">
+                    Canjeados
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10">
+        <!-- Decoración de fondo -->
+        <div class="absolute top-40 left-0 w-72 h-72 bg-wine-600/6 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-40 right-0 w-72 h-72 bg-amber-500/6 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div id="tickets-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 relative z-10">
+            <!-- Los tickets se inyectan dinámicamente con JS -->
+        </div>
+
+        <!-- Mensaje vacío -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="text-7xl mb-5 animate-float">🎫</div>
+            <p class="text-zinc-300 font-serif text-2xl mb-2">No hay tickets en esta categoría aún...</p>
+            <p class="text-zinc-500 text-sm">¡Sigue canjeando o cambia el filtro!</p>
+        </div>
+    </main>
+
+    <!-- Modal de Éxito Premium -->
+    <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md hidden p-4">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-amber-400 rounded-full animate-ping opacity-40"></div>
+            <div class="absolute top-3/4 right-1/4 w-2 h-2 bg-wine-400 rounded-full animate-ping opacity-40" style="animation-delay: 0.5s"></div>
+            <div class="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-amber-300 rounded-full animate-ping opacity-50" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/3 left-1/3 w-1 h-1 bg-wine-300 rounded-full animate-ping opacity-40" style="animation-delay: 1.5s"></div>
+        </div>
+
+        <div class="relative bg-gradient-to-br from-zinc-900 via-wine-950/60 to-zinc-900 border border-amber-500/50 rounded-3xl max-w-md w-full p-8 text-center shadow-2xl transform scale-95 transition-all duration-300 gold-border-glow" id="modal-content">
+            <!-- Corona con anillo pulsante -->
+            <div class="relative w-24 h-24 mx-auto mb-6">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-400/25 to-wine-600/25 rounded-full blur-2xl animate-pulse"></div>
+                <div class="absolute inset-0 rounded-full border-2 border-amber-500/30 animate-pulse-ring"></div>
+                <div class="relative w-full h-full bg-gradient-to-br from-amber-500/25 to-wine-700/25 border-2 border-amber-500/50 rounded-full flex items-center justify-center text-5xl shadow-inner">
+                    👑
+                </div>
+            </div>
+
+            <h3 class="font-serif text-3xl font-black text-gradient-gold-wine mb-3">
+                ¡Ticket Canjeado!
+            </h3>
+            <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mb-4"></div>
+            
+            <p id="modal-ticket-title" class="text-sm font-bold text-amber-300 mb-5 px-4 leading-relaxed"></p>
+            
+            <p class="text-xs text-zinc-400 mb-7 bg-zinc-950/70 p-4 rounded-2xl border border-zinc-800/80 leading-relaxed">
+                Este ticket ha quedado registrado y guardado para entregárselo y cobrárselo inmediatamente a Renzo.
+                <span class="block mt-2 text-amber-400/90 font-semibold">¡Prepárate para la acción, mi reina! 🤍</span>
+            </p>
+
+            <button onclick="closeModal()" class="btn-redeem group relative w-full py-4 bg-gradient-to-r from-amber-500 via-amber-600 to-wine-600 hover:from-amber-400 hover:via-amber-500 hover:to-wine-500 text-zinc-950 font-bold rounded-2xl shadow-xl shadow-amber-500/25 transition-all duration-300 hover:shadow-amber-500/40 hover:scale-[1.02] overflow-hidden">
+                <span class="flex items-center justify-center gap-2">
+                    ¡Entendido, a disfrutar! ❤️
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Premium -->
+    <footer class="relative border-t border-amber-500/15 bg-gradient-to-t from-wine-950/50 to-transparent py-12 text-center text-xs text-zinc-500 overflow-hidden z-10">
+        <div class="absolute inset-0 pattern-dots opacity-20"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <span class="text-amber-500/60">✦</span>
+                <span class="font-serif text-amber-400/90 text-base font-semibold">Gigi & Renzo</span>
+                <span class="text-amber-500/60">✦</span>
+            </div>
+            <p class="mb-1.5 text-zinc-400">Hecho con todo el amor del mundo y programación de alta gama para Gigi 🌟</p>
+            <p class="text-zinc-600">Renzo & Gigi • Para toda la vida ♾️</p>
+            <div class="mt-5 flex items-center justify-center gap-2 text-amber-500/30">
+                <span>❤</span><span class="text-wine-500/40">❤</span><span>❤</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Lista exacta de los 24 tickets con UN SOLO emoji cada uno
+        const ticketsData = [
+            { id: 1, frontTitle: "CONTROL ABSOLUTO (3 HORAS)", frontIcon: "👑", backDesc: "Válido por 3 horas continuas en las que me pongo de rodillas a tu disposición y hago absolutamente todo lo que tú ordenes, sin quejas ni excusas. Canjeable en cualquier momento del viaje." },
+            { id: 2, frontTitle: "10 MINUTOS SIN LÍMITE", frontIcon: "🛍️", backDesc: "Entramos a la tienda o lugar que tú elijas, pongo el cronómetro en 10 minutos y te compro absolutamente todo lo que quieras dentro de ese tiempo. No aplica límite de antojos." },
+            { id: 3, frontTitle: "\"ESCLAVO\" PERSONAL POR UNA NOCHE", frontIcon: "🌙", backDesc: "Durante toda una noche estoy 100% a tu servicio: si quieres que te cargue, te haga masajes, te alcance cosas o cumpla cualquier capricho, solo tienes que pedirlo." },
+            { id: 4, frontTitle: "REGALO EXTRA + DETALLE MERENGUE", frontIcon: "🎁", backDesc: "Este ticket me obliga oficialmente a darte un regalo adicional sorpresa y algo especial relacionado con el Real Madrid (aunque me duela el corazón culé jajaja)." },
+            { id: 5, frontTitle: "TRANSPORTE VIP EN BRAZOS", frontIcon: "💪", backDesc: "Válido para que te cargue durante todo el tiempo que tú quieras, ya sea porque te cansaste de caminar por Cusco o simplemente porque quieres estar pegadita a mí." },
+            { id: 6, frontTitle: "LLUVIA DE BESOS DE PIES A CABEZA", frontIcon: "💋", backDesc: "Válido por una sesión completa y sin prisa donde recorro y beso todo tu cuerpo, empezando desde tus pies hasta llegar a tu frente. Uso exclusivo en privado." },
+            { id: 7, frontTitle: "REINA ABSOLUTA DEL DÍA", frontIcon: "👸", backDesc: "Hoy tú tomas el mando total: decides qué comemos, a dónde vamos, qué hacemos y cómo lo hacemos. Yo solo obedezco y me encargo de que la pases increíble." },
+            { id: 8, frontTitle: "SÚPLICA Y BESOS INFINITOS", frontIcon: "🥺", backDesc: "Me pongo a rogarte y a llenarte de besos sin parar hasta que tú misma digas \"basta\". Ideal para cuando quieras sentirte súper engreída." },
+            { id: 9, frontTitle: "PASE VIP DE MIMOS DIARIOS", frontIcon: "🧸", backDesc: "Garantiza que todos los días que estés aquí conmigo serás mimada, abrazada y consentida al máximo nivel. Renovable automáticamente cada mañana." },
+            { id: 10, frontTitle: "MODO NIÑA CHIQUITITA", frontIcon: "🎀", backDesc: "Activa el modo consentimiento extremo: te hablo, te cuido, te apapacho y te trato como una niña chiquitita durante todo el tiempo que tú quieras." },
+            { id: 11, frontTitle: "COMODÍN: PLAN LOCO 24/7", frontIcon: "🚀", backDesc: "Válido para hacer cualquier plan, idea, cita improvisada o locura que se te ocurra, a la hora que sea y en el lugar que sea. Sin importar el frío de Cusco." },
+            { id: 12, frontTitle: "GRITO DE AMOR EN PÚBLICO", frontIcon: "📢", backDesc: "Lo activas en cualquier calle, plaza o lugar público y yo grito a todo pulmón que te amo, sin importar quién esté mirando. Validez eterna." },
+            { id: 13, frontTitle: "NOCHE DE PELÍCULAS & CERO LÍMITES", frontIcon: "🍿", backDesc: "Válido para una maratón nocturna de su saga favorita (Crepúsculo obligatoria) con helado, dulces, frazada gruesa y abacho constante sin quejarme de la hora." },
+            { id: 14, frontTitle: "BARTENDER PERSONAL 24/7", frontIcon: "🍹", backDesc: "Cada vez que quieras un trago, un cóctel, un chocolate caliente o tu bebida favorita durante tu estadía, me encargo de preparártelo y llevártelo a la mesa o a la cama." },
+            { id: 15, frontTitle: "SESIÓN DE FOTOS \"ESTILO PAPARAZZI\"", frontIcon: "📸", backDesc: "Me pongo en modo fotógrafo profesional en cualquier calle de Cusco hasta conseguir esa foto perfecta, con la iluminación y el ángulo exacto que quieres para tu feed." },
+            { id: 16, frontTitle: "COMPRA DE ANTOJO DE MADRUGADA", frontIcon: "🍫", backDesc: "Si te da hambre o se te antoja algo a medianoche (por más frío que haga afuera), me pongo la casaca, salgo a buscarlo y te lo traigo de inmediato." },
+            { id: 17, frontTitle: "BAILE PEGADITO SIN MÚSICA DE FONDO", frontIcon: "🎶", backDesc: "Válido para activar una canción romántica en el celular en cualquier momento del día o de la noche, pararnos en medio de donde estemos y bailar pegaditos." },
+            { id: 18, frontTitle: "CONTROL REMOTO DE LA MÚSICA", frontIcon: "🎧", backDesc: "Durante todo el trayecto o el tiempo que elijas, tú tienes el mando absoluto del parlante y de las canciones. Cero reclamos de mis gustos musicales." },
+            { id: 19, frontTitle: "RECORRIDO SENSORIAL A CIEGAS", frontIcon: "🕯️", backDesc: "Válido para vendarte los ojos durante 20 minutos mientras yo te recorro, te beso y te consiento por todo el cuerpo sin que sepas exactamente qué parte voy a tocar después. Uso 100% en privado" },
+            { id: 20, frontTitle: "DERECHO A VETO Y CAMBIO DE PLAN", frontIcon: "🔄", backDesc: "Si estamos haciendo un plan y de la nada te aburres o quieres hacer otra cosa, activas este ticket y cambiamos de rumbo al instante, sin preguntas ni peros." },
+            { id: 21, frontTitle: "VALE DE \"MEEQUIVOQUÉ PERO TENGO RAZÓN\"", frontIcon: "😌", backDesc: "Canjeable en cualquier discusión o debate tonto para darte la razón absoluta de inmediato, aunque objetivamente la tenga yo jajaja." },
+            { id: 22, frontTitle: "SESIÓN DE RASGUÑITOS Y CARICIAS", frontIcon: "💆‍♀️", backDesc: "Válido para una hora entera de caricias en la cabeza, masajes en el cuero cabelludo o rasguñitos en la espalda hasta que te quedes dormida profundamente." },
+            { id: 23, frontTitle: "CENA SORPRESA HECHA POR MÍ", frontIcon: "🍷", backDesc: "Me meto a la cocina del Airbnb a cocinarte tu platillo favorito, con velas y ambiente romántico para consentirte como se debe." },
+            { id: 24, frontTitle: "EL \"24\": EL SELLO DE NUESTRO INICIO", frontIcon: "♾️", backDesc: "El ticket más especial de todos. Representa el número 24 de nuestros cumples y de la fecha en que nos conocimos. Válido para un abrazo eterno de esos donde el tiempo se detiene por completo." }
+        ];
+
+        // Estado
+        let redeemedTickets = JSON.parse(localStorage.getItem('gigi_redeemed_tickets')) || [];
+        let currentFilter = 'all';
+
+        // Generar partículas flotantes de fondo
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const colors = ['#eab308', '#facc15', '#be123c', '#f472b6', '#fde68a'];
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 4 + 1.5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = `${Math.random() * 15 + 12}s`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.boxShadow = `0 0 ${size * 2}px currentColor`;
+                container.appendChild(particle);
+            }
+        }
+
+        // Crear tarjeta de ticket
+        function createTicketCard(ticket, isRedemed) {
+            const cardWrapper = document.createElement('div');
+            cardWrapper.className = "perspective-1000 h-80 w-full cursor-pointer ticket-card-wrapper animate-fade-in-up";
+            cardWrapper.style.animationDelay = `${(ticket.id % 8) * 0.06}s`;
+            
+            cardWrapper.innerHTML = `
+                <div id="card-${ticket.id}" class="relative w-full h-full duration-700 transform-style-3d shadow-2xl rounded-2xl">
+                    
+                    <!-- FRONT -->
+                    <div class="ticket-front absolute inset-0 w-full h-full backface-hidden bg-gradient-to-br from-zinc-900 via-wine-950/50 to-zinc-950 border ${isRedemed ? 'border-amber-500/60' : 'border-amber-500/25'} rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:border-amber-400/60 group overflow-hidden">
+                        
+                        <!-- Brillo superior -->
+                        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500/70 to-transparent"></div>
+                        
+                        <!-- Esquinas decorativas -->
+                        <div class="absolute top-3.5 left-3.5 w-3 h-3 border-t-2 border-l-2 border-amber-500/40 rounded-tl"></div>
+                        <div class="absolute top-3.5 right-3.5 w-3 h-3 border-t-2 border-r-2 border-amber-500/40 rounded-tr"></div>
+                        <div class="absolute bottom-3.5 left-3.5 w-3 h-3 border-b-2 border-l-2 border-amber-500/40 rounded-bl"></div>
+                        <div class="absolute bottom-3.5 right-3.5 w-3 h-3 border-b-2 border-r-2 border-amber-500/40 rounded-br"></div>
+
+                        <!-- Marca de agua si está canjeado -->
+                        ${isRedemed ? `
+                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.07] pointer-events-none">
+                            <div class="text-[120px] font-black text-amber-400 rotate-[-25deg]">✓</div>
+                        </div>` : ''}
+
+                        <!-- Cabecera -->
+                        <div class="flex justify-between items-start relative z-10">
+                            <div class="flex flex-col">
+                                <span class="text-[9px] font-mono font-bold tracking-[0.25em] text-amber-500/60 uppercase">Ticket</span>
+                                <span class="text-2xl font-mono font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-wine-400 leading-none">#${String(ticket.id).padStart(2, '0')}</span>
+                            </div>
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/12 to-wine-600/12 border border-amber-500/25 flex items-center justify-center text-3xl shadow-inner group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                ${ticket.frontIcon}
+                            </div>
+                        </div>
+
+                        <!-- Título -->
+                        <div class="text-center my-auto relative z-10 px-1">
+                            <div class="w-10 h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent mx-auto mb-3"></div>
+                            <h3 class="font-serif text-base sm:text-[17px] font-bold text-zinc-100 tracking-wide uppercase leading-tight">
+                                ${ticket.frontTitle}
+                            </h3>
+                            <div class="w-10 h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent mx-auto mt-3"></div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="flex items-center justify-between pt-3 border-t border-zinc-800/80 text-[10px] relative z-10">
+                            <span class="text-zinc-400 flex items-center gap-1.5">
+                                ${isRedemed 
+                                    ? '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span> Canjeado' 
+                                    : '<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_6px_rgba(234,179,8,0.8)]"></span> Toca para girar'}
+                            </span>
+                            <span class="text-amber-400 font-semibold tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                                Girar <span class="text-xs">&rarr;</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- BACK -->
+                    <div class="ticket-back absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-wine-950 via-zinc-900 to-wine-950 border border-amber-500/50 rounded-2xl p-5 flex flex-col justify-between shadow-2xl overflow-hidden">
+                        
+                        <!-- Línea decorativa superior -->
+                        <div class="absolute top-0 left-0 right-0 back-decorative-line"></div>
+                        
+                        <!-- Perforación lateral -->
+                        <div class="absolute left-2 top-4 bottom-4 w-px ticket-dashed-line opacity-50"></div>
+
+                        <div class="relative z-10 pl-3">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[9px] font-mono font-bold text-amber-400 tracking-[0.2em] flex items-center gap-1.5">
+                                    <span class="w-1 h-1 rounded-full bg-amber-400 shadow-[0_0_4px_rgba(234,179,8,0.8)]"></span>
+                                    CONDICIONES VIP
+                                </span>
+                                <span class="text-[9px] text-zinc-500 font-mono">#${String(ticket.id).padStart(2, '0')}</span>
+                            </div>
+                            <p class="text-xs sm:text-[13px] text-zinc-300 leading-relaxed overflow-y-auto max-h-32 sm:max-h-40 pr-2 custom-scrollbar">
+                                ${ticket.backDesc}
+                            </p>
+                        </div>
+
+                        <div class="pt-3 border-t border-zinc-800/80 flex flex-col gap-2 relative z-10">
+                            <button onclick="event.stopPropagation(); toggleRedeem(${ticket.id}, event)" 
+                                class="btn-redeem w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 shadow-lg ${
+                                    isRedemed 
+                                        ? 'bg-zinc-800/80 text-amber-400 border border-amber-500/30 hover:bg-zinc-800 hover:border-amber-500/50' 
+                                        : 'bg-gradient-to-r from-amber-500 via-amber-600 to-wine-600 hover:from-amber-400 hover:via-amber-500 hover:to-wine-500 text-zinc-950 hover:shadow-amber-500/40 hover:scale-[1.02]'
+                                }">
+                                ${isRedemed ? '✨ Canjeado (Volver a usar)' : '🎁 ¡Canjear Ticket!'}
+                            </button>
+                            <span class="text-[9px] text-center text-zinc-600 tracking-wide">Toca de nuevo para voltear</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            cardWrapper.addEventListener('click', (e) => {
+                if (e.target.closest('button')) return;
+                const card = document.getElementById(`card-${ticket.id}`);
+                card.classList.toggle('rotate-y-180');
+            });
+
+            return cardWrapper;
+        }
+
+        function renderTickets() {
+            const grid = document.getElementById('tickets-grid');
+            const emptyState = document.getElementById('empty-state');
+            grid.innerHTML = '';
+
+            let filtered = ticketsData.filter(ticket => {
+                const isRedemed = redeemedTickets.includes(ticket.id);
+                if (currentFilter === 'available') return !isRedemed;
+                if (currentFilter === 'redeemed') return isRedemed;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(ticket => {
+                    const isRedemed = redeemedTickets.includes(ticket.id);
+                    grid.appendChild(createTicketCard(ticket, isRedemed));
+                });
+            }
+
+            updateCounter();
+        }
+
+        function toggleRedeem(id, event) {
+            event.stopPropagation();
+            const index = redeemedTickets.indexOf(id);
+            const ticket = ticketsData.find(t => t.id === id);
+
+            if (index > -1) {
+                redeemedTickets.splice(index, 1);
+            } else {
+                redeemedTickets.push(id);
+                triggerConfetti();
+                showSuccessModal(ticket.frontTitle);
+            }
+
+            localStorage.setItem('gigi_redeemed_tickets', JSON.stringify(redeemedTickets));
+            renderTickets();
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 160,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#eab308', '#facc15', '#be123c', '#fde68a', '#ffffff', '#f472b6'],
+                ticks: 220,
+                gravity: 0.8,
+                scalar: 1.15,
+                drift: 0.5,
+            });
+            setTimeout(() => {
+                confetti({
+                    particleCount: 90,
+                    angle: 60,
+                    spread: 75,
+                    origin: { x: 0, y: 0.65 },
+                    colors: ['#eab308', '#be123c', '#facc15', '#fde68a'],
+                    scalar: 1.1,
+                });
+                confetti({
+                    particleCount: 90,
+                    angle: 120,
+                    spread: 75,
+                    origin: { x: 1, y: 0.65 },
+                    colors: ['#eab308', '#be123c', '#facc15', '#fde68a'],
+                    scalar: 1.1,
+                });
+            }, 280);
+        }
+
+        function showSuccessModal(title) {
+            document.getElementById('modal-ticket-title').textContent = title;
+            const modal = document.getElementById('success-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+                }, 10);
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('success-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 280);
+        }
+
+        function updateCounter() {
+            const count = document.getElementById('redeemed-count');
+            count.textContent = `${redeemedTickets.length} / 24`;
+            count.classList.add('scale-110');
+            setTimeout(() => count.classList.remove('scale-110'), 250);
+        }
+
+        function filterTickets(type) {
+            currentFilter = type;
+            const baseClass = "px-6 py-2.5 rounded-xl text-xs font-bold transition-all";
+            const activeClass = "bg-gradient-to-r from-amber-500 to-amber-600 text-zinc-950 shadow-lg shadow-amber-500/25";
+            const inactiveClass = "text-zinc-300 hover:bg-wine-800/40 hover:text-amber-300";
+
+            ['all', 'available', 'redeemed'].forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if (t === type) {
+                    btn.className = `${baseClass} ${activeClass}`;
+                } else {
+                    btn.className = `${baseClass} ${inactiveClass}`;
+                }
+            });
+            renderTickets();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('success-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        window.onload = function() {
+            createParticles();
+            renderTickets();
+        }
+    </script>
+</body>
+</html>
